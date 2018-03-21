@@ -24,58 +24,84 @@
     
 <?php
 echo'
-	<nav class="navbar navbar-default navbar-fixed-top" role="banner">
-		<div class="container">
+	<nav class="navbar navbar-default">
+		<div class="container-fluid navbar-inverse navbar-fixed-top">
+			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
-				<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse"> <span class="sr-only">Toggle navigation</span>
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span>
 					<span class="icon-bar"></span>
-
-					<span class="icon-bar"></span> <span class="icon-bar"></span>
-
-				</button> <a href="index.php" class="navbar-brand">View Factures</a>
-
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="index.php">View Factures<br>
+					<!--<img alt="Brand" src="...">-->
+				</a>
 			</div>
-			<nav class="collapse navbar-collapse" role="navigation">
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li> <a href="#sec" class="">Get Started</a>
-
-					</li>
-					<li> <a href="#sec" class="">Edit</a>
-
-					</li>
-					<li> <a href="#sec" class="">Visualize</a>
-
-					</li>
-					<li> <a href="#sec" class="">Prototype</a>
-
+					<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+					<li><a href="#">Link</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Action</a></li>
+							<li><a href="#">Another action</a></li>
+							<li><a href="#">Something else here</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="#">Separated link</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="#">One more separated link</a></li>
+						</ul>
 					</li>
 				</ul>
-			</nav>
-		</div>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#">Link</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Action</a></li>
+							<li><a href="#">Another action</a></li>
+							<li><a href="#">Something else here</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="#">Separated link</a></li>
+						</ul>
+					</li>
+					<li>
+						<form class="navbar-form navbar-left">
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="Search">
+							</div>
+							<button type="submit" class="btn btn-default">Submit</button>
+						</form>
+					</li>
+				</ul>
+			</div><!-- /.navbar-collapse -->
+		</div><!-- /.container-fluid -->
 	</nav>
 
 	<!--main-->
-	<div class="container">
+	<div class="container-fluid">
 		<div class="row">
 			<!--left-->
-			<div class="col-md-3" id="leftCol">
+			<div class="col-md-2" id="leftCol">
 				<ul class="nav nav-stacked" id="sidebar">
-					<li><a href="#sec0" class="">Section 0</a>
-
+					<li><a href="addclient.php" class="">Ajout Client</a>
 					</li>
-					<li><a href="#sec1" class="">Section 1</a>
-
+					<li><a href="addfacture.php" class="">Ajout Factures</a>
 					</li>
 					<li><a href="#sec2" class="">Section 2</a>
-
 					</li>
 					<li><a href="#sec3" class="">Section 3</a>
-
 					</li>
 					<li><a href="#sec4" class="">Section 4</a>
-
 					</li>
 				</ul>
 			</div>
-			<!--/left-->';
+			<!--/left-->
+			<div class="col-md-10">&nbsp;</div>
+			<!--espace-->';
+			
 ?>        

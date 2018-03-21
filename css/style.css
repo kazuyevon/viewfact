@@ -41,6 +41,29 @@ body {
   border-right-width:5px;
 }
 
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+ text-align:center;
+ vertical-align:middle;
+}
+
+.carousel-indicators li {
+  background-color: #337ab7;
+}
+
+.carousel-indicators .active {
+  background-color:#3c763d;
+}
+
+@media screen and (min-width: 768px)
+.carousel-indicators {
+    bottom: -30px;
+}
+.carousel-indicators {
+	bottom: -30px;
+}
+
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
   background-color: #17a2b8;
 }
+
+

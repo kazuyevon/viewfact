@@ -2,6 +2,7 @@
 include 'header.php';
 include 'inc/misc.php';
 include './class/ClientsManager.php';
+include './class/FacturesManager.php';
 echo'
 	    <script src="vendor/chart.js/Chart.min.js"></script>';
 
@@ -13,23 +14,45 @@ echo'
 echo'
 			<!--right-->
 			<div class="col-md-9">
-				<div class="col-md-4">
-					<p class="text-center">Center aligned</p>
-					<canvas id="myAreaChart" width="100%" height="30"></canvas>
+				<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-pause="hover">
+					<ol class="carousel-indicators">
+						<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+						<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+						<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+					</ol>
+					<div class="carousel-inner" id="carousel" style="width: 50%; margin: auto;">
+						<div class="item active">
+							<canvas id="myAreaChart" class="d-block w-100"" alt="First slide"></canvas>
+							<div class="carousel-caption">
+								<!--<h1 class="super-heading">Exemple</h1>-->
+								<p class="super-paragraph">Exemple</p>
+							</div>
+						</div>
+						<div class="item">
+							<canvas id="myPieChart" class="d-block w-100" alt="Second slide"></canvas>
+							<div class="carousel-caption">
+								<!--<h1 class="super-heading">Exemple</h1>-->
+								<p class="super-paragraph">Exemple</p>
+							</div>
+						</div>
+						<div class="item">
+							<canvas id="myBarChart" class="d-block w-100" alt="Third slide">></canvas>
+							<div class="carousel-caption">
+								<!--<h1 class="super-heading">Exemple</h1>-->
+								<p class="super-paragraph">Exemple</p>
+							</div>
+						</div>
+					</div>
 				</div>
-				<div class="col-md-4">
-					<p class="text-center">Center aligned</p>
-					<canvas id="myPieChart" width="100" height="50"></canvas>
-				</div>
-				<div class="col-md-4">
-					<p class="text-center">Center aligned</p>
-					<canvas id="myBarChart" width="100" height="50"></canvas>
-				</div>
+				<div class="col-md-12">&nbsp;</div>
 				<table class="table table-hover">
 					<thead>
 						<tr>
 							<th scope="col">Nom</th>
 							<th scope="col">Prénom</th>
+							<th scope="col">Nombres Factures</th>
+							<th scope="col">Montant Factures</th>
+							<th scope="col">Dernier Achat</th>
 						</tr>
 					</thead>
 					<tbody>';
@@ -48,6 +71,7 @@ echo'
 	$nbClients;
 	
 	$managerClient = new ClientsManager($pdo);
+	
 	//var_dump($managerClient);
 	$clients = $managerClient->getList();
 	$nbClients = $managerClient->count();
@@ -64,131 +88,35 @@ echo'
 		/* $ids[] = $id;
 		$noms[] = $nom;
 		$prenoms[] = $prenom; */
+		//On récupère le nb total de factures par client, si 0, on désactive le lien
+		$facturesManager = new FacturesManager($pdo);
+		$nbFactures = $facturesManager->nbFact($id);
+		$montantFactures = $facturesManager->montantFact($id);
+		$derniereFact = $facturesManager->lastExistsAnnee($id);
+		if ($nbFactures != 0 && $derniereFact != date("Y")){
+			echo'
+                            <tr class="clickable-row" data-href="viewFact.php?idclient='.$id.'&annee='.$derniereFact.'">';
+		}elseif($nbFactures != 0) {
+			echo'
+                            <tr class="clickable-row" data-href="viewFact.php?idclient='.$id.'&annee='.date("Y").'">';
+		}
+		
+		
+		else{
+			echo'
+                            <tr>';
+		}
 		echo'
-                            <form action="viewFact.php" method="GET">
-                                    <input id="idform" name="idclient" type="hidden" value="'.$id.'">
-                            <tr>
 								<td>'.$nom.'</td>
 								<td>'.$prenom.'</td>
-								<td>
-									<button type="submit" class="btn btn-default">Voir</button>
-								</td>
-							</tr>
-                            </form>';
-	}  
-	echo '
-							<tr class="table-active">
-								<td>
-									TB - Monthly
-								</td>
-								<td>
-									Approved
-								</td>
-							</tr>
-							<tr class="table-success">
-								<td>
-									TB - Monthly
-								</td>
-								<td>
-									Declined
-								</td>
-							</tr>
-							<tr class="table-warning">
-								<td>
-									TB - Monthly
-								</td>
-								<td>
-									Pending
-								</td>
-							</tr>
-							<tr class="table-danger">
-								<td>
-									TB - Monthly
-								</td>
-								<td>
-									Call in to confirm
-								</td>
+								<td>'.$nbFactures.'</td>
+								<td>'.$montantFactures.'</td>
+								<td>'.$derniereFact.'</td>
 							</tr>';
-							
-							
+	}  					
 echo '
 				</tbody>
             </table>';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 echo '	
 		<script type="text/javascript">
 		var ctx = document.getElementById("myAreaChart");
