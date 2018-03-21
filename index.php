@@ -4,121 +4,114 @@ include 'inc/misc.php';
 include 'class/ClientsManager.php';
 include 'class/FacturesManager.php';
 echo'
-	    <script src="vendor/chart.js/Chart.min.js"></script>';
-
-/* if (isset($_GET['idclient'])) {
-    $something = $_GET['idclient'];
-	echo $something;
-} */
-
-echo'
-			<!--right-->
-			<div class="col-md-9">
-				<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-pause="hover">
-					<ol class="carousel-indicators">
-						<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-						<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-						<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-					</ol>
-					<div class="carousel-inner" id="carousel" style="width: 50%; margin: auto;">
-						<div class="item active">
-							<canvas id="myAreaChart" class="d-block w-100"" alt="First slide"></canvas>
-							<div class="carousel-caption">
-								<!--<h1 class="super-heading">Exemple</h1>-->
-								<p class="super-paragraph">Exemple</p>
-							</div>
-						</div>
-						<div class="item">
-							<canvas id="myPieChart" class="d-block w-100" alt="Second slide"></canvas>
-							<div class="carousel-caption">
-								<!--<h1 class="super-heading">Exemple</h1>-->
-								<p class="super-paragraph">Exemple</p>
-							</div>
-						</div>
-						<div class="item">
-							<canvas id="myBarChart" class="d-block w-100" alt="Third slide">></canvas>
-							<div class="carousel-caption">
-								<!--<h1 class="super-heading">Exemple</h1>-->
-								<p class="super-paragraph">Exemple</p>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-12">&nbsp;</div>
-				<div class="col-md-12" id="tab">
-				<table class="table table-hover">
-					<thead>
-						<tr>
-							<th scope="col">Nom</th>
-							<th scope="col">Prénom</th>
-							<th scope="col">Nombres Factures</th>
-							<th scope="col">Montant Factures</th>
-							<th scope="col">Dernier Achat</th>
-						</tr>
-					</thead>
-					<tbody>';
-	try
+	    <script src="js/Chart.2.7.2.bundle.min.js"></script>';
+try
 	{
 		$pdo = new PDO($dsn, $username, $password, $options);
-		//sleep(5);
 	}
 	catch (Exception $e)
 	{
         die('Erreur : ' . $e->getMessage());
 	}
-	$id;
-	$nom;
-	$prenom;
-	$nbClients;
-	
+
 	$managerClient = new ClientsManager($pdo);
-	
-	//var_dump($managerClient);
-	$clients = $managerClient->getList();
+	$facturesManager = new FacturesManager($pdo);
 	$nbClients = $managerClient->count();
-	//var_dump($clients);
-	foreach ($clients as $unClient)
-	{
-		//echo var_dump($unClient).'<br>';
-		$id = $unClient->id();
-		//echo $id;
-		$nom = $unClient->nom();
-		//echo $nom;
-		$prenom = $unClient->prenom();
-		//echo $prenom;
-		/* $ids[] = $id;
-		$noms[] = $nom;
-		$prenoms[] = $prenom; */
-		//On récupère le nb total de factures par client, si 0, on désactive le lien
-		$facturesManager = new FacturesManager($pdo);
-		$nbFactures = $facturesManager->nbFact($id);
-		$montantFactures = $facturesManager->montantFact($id);
-		$derniereFact = $facturesManager->lastExistsAnnee($id);
-		if ($nbFactures != 0 && $derniereFact != date("Y")){
-			echo'
-                            <tr class="clickable-row" data-href="viewFact.php?idclient='.$id.'&annee='.$derniereFact.'">';
-		}elseif($nbFactures != 0) {
-			echo'
-                            <tr class="clickable-row" data-href="viewFact.php?idclient='.$id.'&annee='.date("Y").'">';
-		}
-		
-		
-		else{
-			echo'
-                            <tr>';
-		}
-		echo'
-								<td>'.$nom.'</td>
-								<td>'.$prenom.'</td>
-								<td>'.$nbFactures.'</td>
-								<td>'.$montantFactures.'</td>
-								<td>'.$derniereFact.'</td>
-							</tr>';
-	}  					
-echo '
-				</tbody>
-            </table>
-			</div>';
+	$totaFactures = $facturesManager->count();
+	$sommeTotalFactures = round($facturesManager->somme(), 2);
+	$minSommeTotal = round($facturesManager->minSomme(), 2);
+	$maxSommeTotal = round($facturesManager->maxSomme(), 2);
+
+echo'
+			
+				<div class="col-md-12">
+					<div class="col-md-6">
+						<div class="alert alert-info" role="alert">
+							<ul class="list-group">
+								<li class="list-group-item">
+									<span class="badge">'.$nbClients.'</span>
+									Nombre de Clients
+								</li>
+								<li class="list-group-item">
+									<span class="badge">'.$totaFactures.'</span>
+									Nombre de Factures
+								</li>
+								<li class="list-group-item">
+									<span class="badge">'.$sommeTotalFactures.'</span>
+									Somme des  Factures
+								</li>
+								<li class="list-group-item">
+									<span class="badge">'.$minSommeTotal.'</span>
+									Minimum des  Factures
+								</li>
+								<li class="list-group-item">
+									<span class="badge">'.$maxSommeTotal.'</span>
+									Maximum des  Factures
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="alert alert-info" role="alert">
+							<ul class="list-group">
+								<li class="list-group-item">
+									<span class="badge"></span>
+									
+								</li>
+								<li class="list-group-item">
+									<span class="badge"></span>
+									
+								</li>
+								<li class="list-group-item">
+									<span class="badge"></span>
+									
+								</li>
+								<li class="list-group-item">
+									<span class="badge"></span>
+									
+								</li>
+								<li class="list-group-item">
+									<span class="badge"></span>
+									
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-pause="hover">
+						<ol class="carousel-indicators">
+							<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+							<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+							<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+						</ol>
+						<div class="carousel-inner" id="carousel" style="width: 75%; margin: auto;">
+							<div class="item active">
+								<canvas id="myAreaChart" class="d-block w-100"" alt="First slide"></canvas>
+								<div class="carousel-caption">
+									<!--<h1 class="super-heading">Exemple</h1>-->
+									<p class="super-paragraph">Exemple</p>
+								</div>
+							</div>
+							<div class="item">
+								<canvas id="myPieChart" class="d-block w-100" alt="Second slide"></canvas>
+								<div class="carousel-caption">
+									<!--<h1 class="super-heading">Exemple</h1>-->
+									<p class="super-paragraph">Exemple</p>
+								</div>
+							</div>
+							<div class="item">
+								<canvas id="myBarChart" class="d-block w-100" alt="Third slide">></canvas>
+								<div class="carousel-caption">
+									<!--<h1 class="super-heading">Exemple</h1>-->
+									<p class="super-paragraph">Exemple</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				';
+
 echo '	
 		<script type="text/javascript">
 		var ctx = document.getElementById("myAreaChart");
@@ -244,34 +237,6 @@ echo '
 				});
 			</script>';
 
-	
-	// utiliser la connexion ici
-	/* $querydb = $pdo->prepare('SELECT id, nom, prenom FROM clients ORDER BY nom ASC');
-	$querydb->execute();
-	$round = 1;
-	while ($donnees = $querydb->fetch())
-	{
-		echo '
-		<form action="viewClient.php" method="GET">
-			<input id="idform" name="idclient" type="hidden" value="'.$donnees['id'].'">
-			<tr>
-				<td>
-					'.$donnees['nom'].'
-				</td>
-				<td>
-				'.$donnees['prenom'].'
-				</td>
-				<td>
-					<button type="submit" class="btn btn-default">Voir</button>
-				</td>
-			</tr>
-		</form>
-		';
-	} */
-
-	//sleep(60);
-	// et maintenant, fermez la connexion!
-	//$querydb->closeCursor();
 	$pdo = null;
 
 	require 'footer.php';

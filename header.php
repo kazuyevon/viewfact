@@ -42,7 +42,7 @@ echo'
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+					<li class="active"><a href="#">Link<span class="sr-only">(current)</span></a></li>
 					<li><a href="#">Link</a></li>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
@@ -62,8 +62,8 @@ echo'
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="#">Action</a></li>
-							<li><a href="#">Another action</a></li>
+							<li><a href="addclient.php">Ajouter des clients</a></li>
+							<li><a href="addfacture.php">Ajouter des factures</a></li>
 							<li><a href="#">Something else here</a></li>
 							<li role="separator" class="divider"></li>
 							<li><a href="#">Separated link</a></li>
@@ -88,9 +88,9 @@ echo'
 			<!--left-->
 			<div class="col-md-2" id="leftCol">
 				<ul class="nav nav-stacked" id="sidebar">
-					<li><a href="addclient.php" class="">Ajout Client</a>
+					<li><a href="viewClient.php" class="">Clients</a>
 					</li>
-					<li><a href="addfacture.php" class="">Ajout Factures</a>
+					<li><a href="#sec1" class="">section1</a>
 					</li>
 					<li><a href="#sec2" class="">Section 2</a>
 					</li>
@@ -101,7 +101,7 @@ echo'
 				</ul>
 			</div>
 			<!--/left-->
-			<div class="col-md-10">&nbsp;</div>
-			<!--espace-->';
+			<!--right-->
+			<div class="col-md-9">';
 			
 ?>        

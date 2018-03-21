@@ -51,8 +51,6 @@ if (isset($_GET['idclient'])) {
 	//var_dump($annees);
 
 	echo '
-			<!--right-->
-			<div class="col-md-9">
 				<nav aria-label="Page navigation">
 					<ul class="pagination">
 						<!--<li>

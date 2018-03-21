@@ -1,5 +1,12 @@
-
+fonts/*
+old/*
 docs/*
+apvao/*
+minijeu/*
+pog/*
+templates/*
+testchart/$
+viewfac/*
 .metadata/*
 .buildpath
 

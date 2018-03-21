@@ -35,6 +35,16 @@ class FacturesManager
 	  return $this->_pdo->query('SELECT SUM(somme) FROM factures')->fetchColumn();
   }
   
+  public function minSomme()
+  {
+	  return $this->_pdo->query('SELECT MIN(somme) FROM factures')->fetchColumn();
+  }
+  
+  public function maxSomme()
+  {
+	  return $this->_pdo->query('SELECT Max(somme) FROM factures')->fetchColumn();
+  }
+  
   public function sommeAnnee($annee)
   {
 	return $this->_pdo->query('SELECT SUM(somme) FROM factures WHERE YEAR(date) = '.$annee)->fetchColumn();

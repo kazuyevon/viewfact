@@ -74,8 +74,6 @@ if (isset($_POST['nombre'])){
 }
 
 	echo '
-			<!--right-->
-			<div class="col-md-9">
 				<div class="col-md-8">
 				<label for="basic-addon1">Générateur de facture</label>
 					<form action="addfacture.php" method="post">
