@@ -93,7 +93,6 @@ if (isset($_GET['idclient'])) {
 	// cree un array de 12 mois de montant vide pour le graph
 	for($i=0; $i<12; $i++){
 		$arraymontant[] = 0;
-		$arraycumul[] = 0;
 	}
 	
 	//remplit l'annee
@@ -108,25 +107,25 @@ if (isset($_GET['idclient'])) {
 		}else{
 			$arraymontant[$unMois-1] = (double)round($sommes[$m], 2);
 		}
-		//on ajoute chaque valeur de chaque mois avec la précédente
-		if(isset($arraycumul[$unMois-1]) && isset($arraycumul[$unMois-2])){
-			$arraycumul[$unMois-1] = (double)round($arraymontant[$unMois-1] + $arraycumul[$unMois-2], 2);
-			
-		}elseif (isset($arraycumul[$unMois-1])){
-			$arraycumul[$unMois-1] = (double)round($sommes[$m], 2);
+		$m++;
+	}
+	
+	$m=0;
+	foreach($arraymontant as $unMontant){
+		
+		if ($m == 0 ){
+			$arraycumul[] = $unMontant;
+		}else {
+			$arraycumul[] = $unMontant + $arraycumul[$m-1];
 		}
 		$m++;
 	}
+	
+	
 
 	// calcul la somme de l'annee du client
 	// déjà calculé array_sum($arraymontant));
 	/* $sommeTotal = $managerFactures->montantFact($id_client);*/
-	
-	// cree un array de 12 mois de montant vide pour le graph
-	for($i=0; $i<12; $i++){
-		$arraymontant[] = 0;
-		$arraycumul[] = 0;
-	}
 	
 	//calcule le nb d'achat de l'année du client
 	$nbAchats = $managerFactures->nbFactAnnee($id_client, $annee);
@@ -224,6 +223,10 @@ echo '
 							<li class="list-group-item">
 								<span class="badge">'.max($arraymontant).'</span>
 									Achats max '.$annee.'
+							</li>
+							<li class="list-group-item">
+								<span class="badge">'.$arraycumul[11].'</span>
+									Achat Total '.$annee.'
 							</li>
 						</ul>
 				

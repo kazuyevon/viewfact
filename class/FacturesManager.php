@@ -11,14 +11,16 @@ class FacturesManager
   
   public function add(Facture $facture)
   {
-    $q = $this->_pdo->prepare('INSERT INTO factures(date, somme) VALUES(:date, :somme)');
-    $q->bindValue(':date', $facture->date());
+    $q = $this->_pdo->prepare('INSERT INTO factures(idclient, date, somme) VALUES(:id_client, :date, :somme)');
+    $q->bindValue(':id_client', $facture->id_client());
+	$q->bindValue(':date', $facture->date());
 	$q->bindValue(':somme', $facture->somme());
     $q->execute();
     
     $facture->hydrate([
       'num' => $this->_pdo->lastInsertId(),
-      'somme' => 0,
+      'idclient' => 100,
+	  'somme' => 0,
 	  'date' => date("Y-m-d"),
     ]);
   }

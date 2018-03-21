@@ -17,7 +17,7 @@ class ClientsManager
     $q->execute();
     
     $client->hydrate([
-      'clientId' => $this->_pdo->lastInsertId(),
+      'id' => $this->_pdo->lastInsertId(),
 	  'nom' => 'LeBonhomme',
 	  'prenom' => 'Toto',
     ]);

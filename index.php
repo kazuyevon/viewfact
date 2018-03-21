@@ -1,8 +1,8 @@
 <?php
 include 'header.php';
 include 'inc/misc.php';
-include './class/ClientsManager.php';
-include './class/FacturesManager.php';
+include 'class/ClientsManager.php';
+include 'class/FacturesManager.php';
 echo'
 	    <script src="vendor/chart.js/Chart.min.js"></script>';
 
@@ -45,6 +45,7 @@ echo'
 					</div>
 				</div>
 				<div class="col-md-12">&nbsp;</div>
+				<div class="col-md-12" id="tab">
 				<table class="table table-hover">
 					<thead>
 						<tr>
@@ -116,7 +117,8 @@ echo'
 	}  					
 echo '
 				</tbody>
-            </table>';
+            </table>
+			</div>';
 echo '	
 		<script type="text/javascript">
 		var ctx = document.getElementById("myAreaChart");

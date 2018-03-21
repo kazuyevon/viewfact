@@ -1,5 +1,4 @@
 <?php
-include 'inc/misc.php';
 class Client
 {
     // déclaration d'une propriété

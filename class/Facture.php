@@ -1,5 +1,6 @@
 <?php
-class Facture {
+class Facture 
+{
 		private $_num;
 		private $_id_client;
 		private $_date;
