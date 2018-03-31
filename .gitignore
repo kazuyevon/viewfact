@@ -10,3 +10,4 @@ viewfac/*
 .metadata/*
 .buildpath
 
+*.db
