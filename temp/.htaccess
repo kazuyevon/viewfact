@@ -1,0 +1,10 @@
+﻿<IfModule mod_rewrite.c>
+<IfModule mod_env.c>
+SetEnv HTTP_MOD_REWRITE On
+</IfModule>
+
+Options +FollowSymlinks
+
+RewriteCond %{HTTP:Authorization} ^(.*)
+RewriteRule . - [E=HTTP_AUTHORIZATION:%1]
+RewriteRule	^Client.php$ http://127.0.0.1:3388/viewfac/viewClient.php[L]	

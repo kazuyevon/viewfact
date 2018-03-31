@@ -1,4 +1,17 @@
 <?php
+	/**	CREATE TABLE clients (
+			id int(11) NOT NULL,
+			nom varchar(255) NOT NULL,
+			prenom varchar(255) NOT NULL
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=43 ;
+
+
+		ALTER TABLE clients
+		ADD PRIMARY KEY (id), ADD KEY id (id);
+
+		ALTER TABLE clients
+		MODIFY id int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
+	*/
 class Client
 {
     // déclaration d'une propriété

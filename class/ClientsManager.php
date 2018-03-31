@@ -33,9 +33,9 @@ class ClientsManager
     $this->_pdo->exec('DELETE FROM clients WHERE id = '.$client->id());
   }
   
-  public function exists($info)
+  public function exists($info, $info2)
   {
-    if (is_int($info)) // On veut voir si tel client ayant pour id $info existe.
+    if (is_int($info) && $info2 == "0") // On veut voir si tel client ayant pour id $info existe.
     {
       return (bool) $this->_pdo->query('SELECT COUNT(*) FROM clients WHERE id = '.$info)->fetchColumn();
     }
@@ -43,8 +43,8 @@ class ClientsManager
     // Sinon, c'est qu'on veut vérifier que le nom existe ou pas.
 	//ajouter la possibilite de mettre nom et prenom
     
-	$q = $this->_pdo->prepare('SELECT COUNT(*) FROM clients WHERE nom = :nom OR prenom = :nom');
-    $q->execute([':nom' => $info]);
+	$q = $this->_pdo->prepare('SELECT COUNT(*) FROM clients WHERE nom = :nom AND prenom = :prenom');
+    $q->execute([':nom' => $info, ':prenom' => $info2]);
     
     return (bool) $q->fetchColumn();
   }
@@ -85,11 +85,25 @@ class ClientsManager
   {
     $q = $this->_pdo->prepare('UPDATE clients SET nom = :nom, prenom = :prenom WHERE id = :id');
     
-    $q->bindValue(':nom', $client->nom(), PDO::PARAM_INT);
-	$q->bindValue(':prenom', $client->prenom(), PDO::PARAM_INT);
+    $q->bindValue(':nom', $client->nom(), PDO::PARAM_STR);
+	$q->bindValue(':prenom', $client->prenom(), PDO::PARAM_STR);
     $q->bindValue(':id', $client->id(), PDO::PARAM_INT);
-    
     $q->execute();
+  }
+  
+  // function pour la searchbox
+  public function getInconnu($keyword, $category) {
+	$clients = [];
+	$keyword = "%{$keyword}%";
+	$q = $this->_pdo->prepare('SELECT * FROM clients WHERE '.$category.' LIKE :keyword');
+	$q->bindValue(':keyword', $keyword);
+	$q->execute();
+	
+	while ($donnees = $q->fetch(PDO::FETCH_ASSOC))
+    {
+	    $clients[] = new Client($donnees);
+    }
+    return $clients;
   }
   
   public function setDb(PDO $pdo)

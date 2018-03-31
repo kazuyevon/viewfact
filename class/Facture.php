@@ -1,4 +1,19 @@
 <?php
+	/**		CREATE TABLE factures (
+				num int(11) NOT NULL,
+				idclient int(11) NOT NULL,
+				`date` date NOT NULL,
+				somme double NOT NULL
+			) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8714 ;
+
+
+			ALTER TABLE factures
+			ADD PRIMARY KEY (num), ADD KEY num (num), ADD KEY num_2 (num);
+
+			ALTER TABLE factures
+			MODIFY num int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
+	*/
+
 class Facture 
 {
 		private $_num;

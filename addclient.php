@@ -12,18 +12,18 @@ if (isset($_POST['nombre'])){
 	
 	
 	function generateRandomNom($length) {
-	$characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $charactersLength = strlen($characters);
-    $randomString = '';
+		$characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$charactersLength = strlen($characters);
+		$randomString = '';
     for ($i = 0; $i < $length; $i++) {
         $randomString .= $characters[rand(0, $charactersLength - 1)];
     }
     return $randomString;
 	}
 	function generateRandomPrenom($length) {
-	$characters = 'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz';
-    $charactersLength = strlen($characters);
-    $randomString = '';
+		$characters = 'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz';
+		$charactersLength = strlen($characters);
+		$randomString = '';
     for ($i = 0; $i < $length; $i++) {
         $randomString .= $characters[rand(0, $charactersLength - 1)];
     }
@@ -46,11 +46,20 @@ if (isset($_POST['nombre'])){
 	
 	for ($i=0; $i<$nombre; $i++){
 		
+		$nom = generateRandomNom(10);
+		$prenom = generateRandomPrenom(5);
 		$client = new Client([
-			'nom' => generateRandomNom(10),
-			'prenom' => generateRandomPrenom(5)
+			'nom' => $nom,
+			'prenom' => $prenom
 		]);
-		$managerClients->add($client);
+		if (!$managerClients->exists($nom, $prenom))
+		{
+			$managerClients->add($client);
+		}
+		else 
+		{
+			echo "entré existantes";
+		}
 	}
 	echo'
 			<!--right-->
@@ -65,7 +74,7 @@ if (isset($_POST['nombre'])){
 					<form action="addclient.php" method="post">
 						<div class="input-group">
 							<span class="input-group-addon" id="basic-addon1">nb</span>
-							<input type="number" name="nombre" class="form-control" placeholder=Nombre de cleint à générer" aria-describedby="basic-addon1">
+							<input type="number" name="nombre" class="form-control" placeholder=Nombre de client à générer" aria-describedby="basic-addon1">
 							<span class="input-group-btn">
 								<button class="btn btn-default" type="submit" value"submit">Go!</button>
 							</span>

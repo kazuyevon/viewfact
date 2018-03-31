@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 
 <head>
@@ -14,6 +14,7 @@
 
 	<!-- Bootstrap core CSS-->
 	<link href="css/bootstrap-3.3.7.min.css" rel="stylesheet">
+	<link href="css/jquery-ui.min.css" rel="stylesheet">
 	<!-- Custom styles for this template-->
 	<link href="css/style.css" rel="stylesheet">
 
@@ -23,6 +24,8 @@
 <body>
     
 <?php
+$keyword = "";
+
 echo'
 	<nav class="navbar navbar-default">
 		<div class="container-fluid navbar-inverse navbar-fixed-top">
@@ -70,18 +73,38 @@ echo'
 						</ul>
 					</li>
 					<li>
-						<form class="navbar-form navbar-left">
+						<div class="navbar-form navbar-left"
+							<form class="" action="" method="post">
 							<div class="form-group">
-								<input type="text" class="form-control" placeholder="Search">
+								<input type="text" id="searchbox" class="form-control typeahead" name="searchbox" placeholder="Rechercher">
 							</div>
-							<button type="submit" class="btn btn-default">Submit</button>
-						</form>
+							<button type="submit" class="btn btn-default">Ok</button>
+							</form>
+							<div>
+								<a class="btn btn-default" role="button" data-toggle="collapse" data-target="#collapseSearch" aria-expanded="false" aria-controls="collapseExample" style=" width: -webkit-fill-available;">
+									Options de recherche
+								</a>
+								<div class="collapse" id="collapseSearch">
+									<div class="well">
+										<form method="POST" action="'; echo htmlspecialchars($_SERVER["PHP_SELF"]);echo '">
+										<ul class="nav">
+										<li><input type="radio" name="category" checked value="nom">Nom de Client</li>
+										<li><input type="radio" name="category" value="prenom">Prénom de Client</li>
+										<li><input type="radio" name="category" value="num">Numéro de Facture</li>
+										<li><input type="radio" name="category" value="somme">Montant de Facture</li>
+										<li><input type="radio" name="category" value="date">Date de Facture</li>
+										</ul>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
 					</li>
 				</ul>
 			</div><!-- /.navbar-collapse -->
 		</div><!-- /.container-fluid -->
 	</nav>
-
+	
 	<!--main-->
 	<div class="container-fluid">
 		<div class="row">

@@ -32,7 +32,12 @@ if (isset($_GET['idclient'])) {
 	//on s'assure que $annee contienne une annee sinon on met celle courante
 	if (($_GET['annee'] != '0') && (!$managerFactures->existsAnnee($id_client, $_GET['annee']))){
 		//sinon on recupère l'annee d'aujoud'hui;
-		$annee = date("Y");
+		//doit recuperer la derniere annee de la db
+		$checkannees = $managerFactures->arrayExistsAnnee($id_client);
+		foreach ($checkannees as $checkannee){
+			$annee = $checkannee;
+		}
+		if (!isset($annee)) {echo "erreur de présence facture"; die();}
 	}else
 	{
 		$annee = $_GET['annee'];

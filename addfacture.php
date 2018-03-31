@@ -21,7 +21,6 @@ if (isset($_POST['nombre'])){
     return $randomString;
 	}
 	
-	
 	function generateRandomDate() {
 	$symbol = '-';
     $randomString = '';
@@ -59,12 +58,21 @@ if (isset($_POST['nombre'])){
 	for ($i=0; $i<$nombre; $i++){
 		
 		$id_client = (int)mt_rand(1, $nbClients);
-		$facture = new Facture([
+		$somme = generateRandomSomme();
+		$date = generateRandomDate();
+		$facture = new Facture([	
 			'idclient' => $id_client,
-			'somme' => generateRandomSomme(),
-			'date' => generateRandomDate()
+			'somme' => $somme,
+			'date' => $date
 		]);
-		$managerFactures->add($facture);
+		if(!$managerFactures->exists($id_client, $somme, $date) && $date != "0000-00-00"){
+				$managerFactures->add($facture);
+		}
+		else 
+		{
+			echo "entré existantes";
+		}
+		
 	}
 	echo'
 			<!--right-->

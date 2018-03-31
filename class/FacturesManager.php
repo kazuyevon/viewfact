@@ -79,19 +79,22 @@ class FacturesManager
     $this->_pdo->exec('DELETE FROM factures WHERE num = '.$facture->num());
   }
   
-  public function exists($info)
+  public function exists($info, $info2, $info3)
   {
-    if (is_int($info)) // On veut voir si tel facture ayant pour num $info existe.
+    if (is_int($info) && $info2 == "0" && $info3 == "0") // On veut voir si tel facture ayant pour num $info existe.
     {
       return (bool) $this->_pdo->query('SELECT COUNT(*) FROM factures WHERE num = '.$info)->fetchColumn();
     }
+	elseif ($info != null && $info2 != null && $info3 != null)
+	{
+			
+		// Sinon, c'est qu'on veut vérifier que le date existe ou pas.
     
-    // Sinon, c'est qu'on veut vérifier que le date existe ou pas.
-    
-    $q = $this->_pdo->prepare('SELECT COUNT(*) FROM factures WHERE date = :date');
-    $q->execute([':date' => $info]);
+		$q = $this->_pdo->prepare('SELECT COUNT(*) FROM factures WHERE idclient = :idclient AND somme = :somme AND date = :date');
+		$q->execute([':idclient' => $info, ':somme' => $info2, ':date' => $info3]);
     
     return (bool) $q->fetchColumn();
+	}
   }
   
   public function existsAnnee($id_client, $annee)
@@ -237,23 +240,31 @@ class FacturesManager
   
   public function update(Facture $facture)
   {
-    $q = $this->_pdo->prepare('UPDATE factures SET somme = :somme WHERE num = :num');
+    $q = $this->_pdo->prepare('UPDATE factures SET somme = :somme, date = :date WHERE num = :num');
     
-    $q->bindValue(':somme', $facture->somme(), PDO::PARAM_INT);
+    $q->bindValue(':somme', $facture->somme(), PDO::PARAM_STR);
+    $q->bindValue(':date', $facture->date(), PDO::PARAM_STR);
     $q->bindValue(':num', $facture->num(), PDO::PARAM_INT);
-    
     $q->execute();
+  }
+  
+  // function pour la searchbox
+  public function getInconnu($keyword, $category) {
+	$factures = [];
+	$keyword = "%{$keyword}%";
+	$q = $this->_pdo->prepare('SELECT * FROM factures WHERE '.$category.' LIKE :keyword');
+	$q->bindValue(':keyword', $keyword);
+	$q->execute();
+	
+	while ($donnees = $q->fetch(PDO::FETCH_ASSOC))
+    {
+	    $factures[] = new Facture($donnees);
+    }
+    return $factures;
   }
   
   public function setDb(PDO $pdo)
   {
     $this->_pdo = $pdo;
   }
-  
-  /* public function getSommesAnnee($id_client, $annnee){
-	  $sommes = []
-	  
-	  
-  } */
-  
 }
